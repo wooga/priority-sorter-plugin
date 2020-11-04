@@ -32,6 +32,7 @@ import java.util.List;
 import jenkins.advancedqueue.DecisionLogger;
 import jenkins.advancedqueue.Messages;
 import jenkins.advancedqueue.jobinclusion.JobInclusionStrategy;
+import jenkins.branch.OrganizationFolder;
 import jenkins.model.Jenkins;
 
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -57,6 +58,10 @@ public class FolderBasedJobInclusionStrategy extends JobInclusionStrategy {
             ListBoxModel items = new ListBoxModel();
             List<Folder> folders = Jenkins.get().getAllItems(Folder.class);
             for (Folder folder : folders) {
+                items.add(folder.getFullName(), folder.getFullName());
+            }
+            List<OrganizationFolder> orgFolder = Jenkins.get().getAllItems(OrganizationFolder.class);
+            for (OrganizationFolder folder : orgFolder) {
                 items.add(folder.getFullName(), folder.getFullName());
             }
             return items;
