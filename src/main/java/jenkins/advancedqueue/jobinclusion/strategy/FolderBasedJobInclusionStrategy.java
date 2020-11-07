@@ -23,21 +23,18 @@
  */
 package jenkins.advancedqueue.jobinclusion.strategy;
 
+import com.cloudbees.hudson.plugins.folder.Folder;
+import com.cloudbees.hudson.plugins.folder.computed.ComputedFolder;
 import hudson.Extension;
 import hudson.model.Job;
 import hudson.util.ListBoxModel;
-
-import java.util.List;
-
 import jenkins.advancedqueue.DecisionLogger;
 import jenkins.advancedqueue.Messages;
 import jenkins.advancedqueue.jobinclusion.JobInclusionStrategy;
-import jenkins.branch.OrganizationFolder;
 import jenkins.model.Jenkins;
-
 import org.kohsuke.stapler.DataBoundConstructor;
 
-import com.cloudbees.hudson.plugins.folder.Folder;
+import java.util.List;
 
 /**
  * @author Magnus Sandberg
@@ -60,10 +57,11 @@ public class FolderBasedJobInclusionStrategy extends JobInclusionStrategy {
             for (Folder folder : folders) {
                 items.add(folder.getFullName(), folder.getFullName());
             }
-            List<OrganizationFolder> orgFolder = Jenkins.get().getAllItems(OrganizationFolder.class);
-            for (OrganizationFolder folder : orgFolder) {
+            List<ComputedFolder> orgFolder = Jenkins.get().getAllItems(ComputedFolder.class);
+            for (ComputedFolder folder : orgFolder) {
                 items.add(folder.getFullName(), folder.getFullName());
             }
+
             return items;
         }
 
